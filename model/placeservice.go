@@ -20,7 +20,7 @@ func NewPlaceService() PlaceService {
 }
 
 func (ps *placeService) LoadPlaces() error {
-    file, err := os.Open("places.json")
+    file, err := os.Open("/places.json")
     if err != nil {
         if os.IsNotExist(err) {
             ps.places = []Place{}
