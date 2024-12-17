@@ -4,8 +4,8 @@ import (
 	"html/template"
 	"net/http"
 
-	"siteAlushta/site/controller"
-	"siteAlushta/site/model"
+	"siteAlushta/controller"
+	"siteAlushta/model"
 )
 
 func main() {
