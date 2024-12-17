@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интересные места в Алуште</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script>
+        function openModal(place) {
+            document.getElementById("modalName").innerText = place.Name;
+            document.getElementById("modalImage").src = place.ImageURL;
+            document.getElementById("modalCategory").innerText = place.Category;
+            document.getElementById("modalDescription").innerText = place.Description;
+            document.getElementById("modalAddress").innerText = place.Address;
+            document.getElementById("detailsModal").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("detailsModal").style.display = "none";
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Интересные места в Алуште</h1>
+        <nav>
+            <button onclick="window.location.href='/?category=Музеи'">Музеи</button>
+            <button onclick="window.location.href='/?category=Вероисповедание'">Вероисповедание</button>
+            <button onclick="window.location.href='/?category=Живописные места'">Живописные места</button>
+            <button onclick="window.location.href='/?category=Отдых'">Отдых</button>
+            <button onclick="window.location.href='/?category=Памятники'">Памятники</button>
+            <button onclick="window.location.href='/?category=Развлечения'">Развлечения</button>
+            <button onclick="window.location.href='/'">Все места</button>
+        </nav>
+    </header>
+    <main>
+        <div class="card-container">
+            {{range .}}
+            <div class="card" onclick='openModal({Name:"{{.Name}}", ImageURL:"{{.ImageURL}}", Category:"{{.Category}}", Description:"{{.Description}}", Address:"{{.Address}}"})'>
+                <h2>{{.Name}}</h2>
+                <img src="{{.ImageURL}}" alt="{{.Name}}">
+                <p><strong>Категория:</strong> {{.Category}}</p>
+                <p><strong>Адрес:</strong> {{.Address}}</p>
+            </div>
+            {{end}}
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Интересные места в Алуште. Все права защищены.</p>
+        <p>Контакты: info@example.com</p>
+    </footer>
+
+    <div id="detailsModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalName"></h2>
+            <img id="modalImage" src="" alt="" style="max-width: 100%; height: auto;">
+            <p><strong>Категория:</strong> <span id="modalCategory"></span></p>
+            <p id="modalDescription"></p>
+            <p><strong>Адрес:</strong> <span id="modalAddress"></span></p>
+        </div>
+    </div>
+</body>
+</html>
