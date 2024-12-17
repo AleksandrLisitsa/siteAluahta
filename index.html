@@ -6,6 +6,8 @@
     <title>Интересные места в Алуште</title>
     <link rel="stylesheet" href="/siteAlushta/static/styles.css">
     <script>
+        let places = [];
+
         function openModal(place) {
             document.getElementById("modalName").innerText = place.name;
             document.getElementById("modalImage").src = place.image_url;
@@ -19,34 +21,44 @@
             document.getElementById("detailsModal").style.display = "none";
         }
 
-        function loadPlaces() {
+        function loadPlaces(category) {
+            const container = document.querySelector('.card-container');
+            container.innerHTML = '';
+            places.filter(place => !category || place.category === category).forEach(place => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.onclick = () => openModal(place);
+                card.innerHTML = `
+                    <h2>${place.name}</h2>
+                    <img src="${place.image_url}" alt="${place.name}">
+                    <p><strong>Категория:</strong> ${place.category}</p>
+                    <p><strong>Адрес:</strong> ${place.address}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
             fetch('places.json')
                 .then(response => response.json())
                 .then(data => {
-                    const container = document.querySelector('.card-container');
-                    data.forEach(place => {
-                        const card = document.createElement('div');
-                        card.className = 'card';
-                        card.onclick = () => openModal(place);
-                        card.innerHTML = `
-                            <h2>${place.name}</h2>
-                            <img src="${place.image_url}" alt="${place.name}">
-                            <p><strong>Категория:</strong> ${place.category}</p>
-                            <p><strong>Адрес:</strong> ${place.address}</p>
-                        `;
-                        container.appendChild(card);
-                    });
+                    places = data;
+                    loadPlaces();
                 });
-        }
-
-        document.addEventListener('DOMContentLoaded', loadPlaces);
+        });
     </script>
 </head>
 <body>
     <header>
         <h1>Интересные места в Алуште</h1>
         <nav>
-            <!-- Кнопки навигации остаются такими же -->
+            <button onclick="loadPlaces('Музеи')">Музеи</button>
+            <button onclick="loadPlaces('Вероисповедание')">Вероисповедание</button>
+            <button onclick="loadPlaces('Живописные места')">Живописные места</button>
+            <button onclick="loadPlaces('Отдых')">Отдых</button>
+            <button onclick="loadPlaces('Памятники')">Памятники</button>
+            <button onclick="loadPlaces('Развлечения')">Развлечения</button>
+            <button onclick="loadPlaces()">Все места</button>
         </nav>
     </header>
     <main>
