@@ -4,8 +4,8 @@ import (
 	"html/template"
 	"net/http"
 
-	"site/controller"
-	"site/model"
+	"siteAlushta/controller"
+	"siteAlushta/model"
 )
 
 func main() {
@@ -14,7 +14,7 @@ func main() {
 		panic(err)
 	}
 
-	tmpl := template.Must(template.ParseFiles("index.html"))
+	tmpl := template.Must(template.ParseFiles("/index.html"))
 	controller := controller.NewPlaceController(service, tmpl)
 
 	http.HandleFunc("/", controller.HomeHandler)
