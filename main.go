@@ -14,7 +14,7 @@ func main() {
 		panic(err)
 	}
 
-	tmpl := template.Must(template.ParseFiles("index.html"))
+	tmpl := template.Must(template.ParseFiles("/siteAlushta/index.html"))
 	controller := controller.NewPlaceController(service, tmpl)
 
 	http.HandleFunc("/", controller.HomeHandler)
