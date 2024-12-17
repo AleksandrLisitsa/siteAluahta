@@ -20,23 +20,22 @@ func NewPlaceService() PlaceService {
 }
 
 func (ps *placeService) LoadPlaces() error {
-    file, err := os.Open("siteAlushta/places.json")
-    if err != nil {
-        if os.IsNotExist(err) {
-            ps.places = []Place{}
-            return nil
-        }
-        return err
-    }
-    defer file.Close()
+	file, err := os.Open("/siteAlushta/places.json")
+	if err != nil {
+		if os.IsNotExist(err) {
+			ps.places = []Place{}
+			return nil
+		}
+		return err
+	}
+	defer file.Close()
 
-    bytes, err := ioutil.ReadAll(file)
-    if err != nil {
-        return err
-    }
-    return json.Unmarshal(bytes, &ps.places)
+	bytes, err := ioutil.ReadAll(file)
+	if err != nil {
+		return err
+	}
+	return json.Unmarshal(bytes, &ps.places)
 }
-
 
 func (ps *placeService) GetPlacesByCategory(category string) []Place {
 	if category == "" {
